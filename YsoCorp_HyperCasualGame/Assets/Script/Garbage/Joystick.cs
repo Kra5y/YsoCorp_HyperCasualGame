@@ -6,71 +6,45 @@ using UnityEngine.EventSystems;
 
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler
 {
+    [Header("Joystick Components")]
     [SerializeField] Image BG;
     [SerializeField] Image Handle;
-    [SerializeField] GameObject Player;
-    [SerializeField] float speed;
-    [SerializeField] Rigidbody Rb;
-    Vector3 InitialPos, StartPos, EndPos,Dir;
-    bool JoystickPressed;
+
+    Vector3 HandleStartingPos;
 
     private void Start()
     {
-        InitialPos = Handle.transform.position;
+        HandleStartingPos = Handle.transform.position;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        EndPos = eventData.position;
-        SO_GameManager.CharacterParameters.IsTouchingScreen = true;
+        SO_GameManager.PlayerInputs.FingerCurrentPos = eventData.position;
+        SO_GameManager.PlayerInputs.PlayerIsTouchingScreen = true;
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        StartPos = eventData.position;
+        SO_GameManager.PlayerInputs.FingerInitialPos = eventData.position;
         BG.transform.position = eventData.position;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        SO_GameManager.CharacterParameters.IsTouchingScreen = false;
-        BG.transform.position = InitialPos;
-        Handle.transform.position = InitialPos;
-        BreakForce();
-
-
+        SO_GameManager.PlayerInputs.PlayerIsTouchingScreen = false;
+        BG.transform.position = HandleStartingPos;
+        Handle.transform.position = HandleStartingPos;
     }
 
     private void Update()
     {
-        if (SO_GameManager.CharacterParameters.IsTouchingScreen)
+        if (SO_GameManager.PlayerInputs.PlayerIsTouchingScreen)
         {
-            Vector3 Offset = EndPos - StartPos;
-           
-            Vector3 Direction = Vector3.ClampMagnitude(Offset,250f) / 250;
-            Debug.Log(Direction.magnitude);
-            Direction.z = 0;
-            Dir = Direction;
-            Handle.transform.position = new Vector3(StartPos.x + Vector3.ClampMagnitude(Offset,BG.preferredWidth/2).x,StartPos.y + Vector3.ClampMagnitude(Offset,BG.preferredHeight / 2).y,0);
+            Vector3 Offset = SO_GameManager.PlayerInputs.FingerCurrentPos - SO_GameManager.PlayerInputs.FingerInitialPos;
+
+            SO_GameManager.PlayerInputs.JoystickDirection = Vector3.ClampMagnitude(Offset, BG.preferredWidth) / BG.preferredWidth;
+            SO_GameManager.PlayerInputs.JoystickDirection.z = 0;
+            Handle.transform.position = new Vector3(SO_GameManager.PlayerInputs.FingerInitialPos.x + Vector3.ClampMagnitude(Offset, BG.preferredWidth / 2).x, SO_GameManager.PlayerInputs.FingerInitialPos.y + Vector3.ClampMagnitude(Offset, BG.preferredHeight / 2).y, 0);
         }
     }
-
-    private void FixedUpdate()
-    {
-
-        if (SO_GameManager.CharacterParameters.IsTouchingScreen)
-        {
-            PlayerMove(Dir);
-        }
-    }
-    private void PlayerMove(Vector3 Direction)
-    {
-        Rb.MovePosition(Player.transform.position + (Direction * Time.deltaTime * speed));
-    }
-
-    private void BreakForce()
-    {
-        Rb.AddForce(-Rb.velocity, ForceMode.VelocityChange);
-    }
-
 }

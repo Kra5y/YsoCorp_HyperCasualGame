@@ -4,12 +4,23 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    [SerializeField] SOCharacterParameters SO_CharacterParameters;
-    [SerializeField] GameObject Debuguer;
-
-    private void Update()
+    private Rigidbody Rb;
+    private void Start()
     {
-
-
+        Rb = GetComponent<Rigidbody>();
     }
+
+    private void FixedUpdate()
+    {
+        if (SO_GameManager.PlayerInputs.PlayerIsTouchingScreen)
+        {
+            MovePlayer(SO_GameManager.PlayerInputs.JoystickDirection);
+        }
+    }
+
+    public void MovePlayer(Vector3 direction)
+    {
+        Rb.MovePosition( this.transform.position + (direction * Time.deltaTime * SO_GameManager.CharacterParameters.Speed));
+    }
+
 }
