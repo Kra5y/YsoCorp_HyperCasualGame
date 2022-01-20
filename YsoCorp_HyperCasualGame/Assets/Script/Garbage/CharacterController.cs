@@ -9,7 +9,14 @@ public class CharacterController : MonoBehaviour
     {
         Rb = GetComponent<Rigidbody>();
     }
-
+    private void Update()
+    {
+        Rb.velocity = Vector3.zero;
+        if (SO_GameManager.PlayerInputs.BreakForce)
+        {
+            BreakForce();
+        }
+    }
     private void FixedUpdate()
     {
         if (SO_GameManager.PlayerInputs.PlayerIsTouchingScreen)
@@ -21,6 +28,17 @@ public class CharacterController : MonoBehaviour
     public void MovePlayer(Vector3 direction)
     {
         Rb.MovePosition( this.transform.position + (direction * Time.deltaTime * SO_GameManager.CharacterParameters.Speed));
+    }
+
+    public void BreakForce()
+    {
+        Rb.MovePosition(this.transform.position);
+        SO_GameManager.PlayerInputs.BreakForce = false;
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log("Colliding with wall");
     }
 
 }

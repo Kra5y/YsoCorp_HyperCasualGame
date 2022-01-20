@@ -5,12 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class Obstacle : MonoBehaviour
 {
-    [SerializeField] float speed;
-    [SerializeField] Rigidbody Rb;
+    private Rigidbody Rb;
     // Start is called before the first frame update
+    private void Start()
+    {
+        Rb = GetComponent<Rigidbody>();
+    }
     void FixedUpdate()
     {
-        Rb.MovePosition(this.transform.position +(-transform.forward * speed * Time.deltaTime));   
+        Rb.MovePosition(this.transform.position +(-transform.forward * SO_GameManager.ObstaclesManager.ObstaclesSpeed * Time.deltaTime));   
     }
 
     private void OnTriggerEnter(Collider collider)

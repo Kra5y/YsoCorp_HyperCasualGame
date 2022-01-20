@@ -32,6 +32,7 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
     public void OnPointerUp(PointerEventData eventData)
     {
         SO_GameManager.PlayerInputs.PlayerIsTouchingScreen = false;
+        SO_GameManager.PlayerInputs.BreakForce = true;
         BG.transform.position = HandleStartingPos;
         Handle.transform.position = HandleStartingPos;
     }
