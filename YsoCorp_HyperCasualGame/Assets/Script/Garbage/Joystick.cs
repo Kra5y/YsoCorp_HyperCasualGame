@@ -43,9 +43,9 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
         {
             Vector3 Offset = SO_GameManager.PlayerInputs.FingerCurrentPos - SO_GameManager.PlayerInputs.FingerInitialPos;
 
-            SO_GameManager.PlayerInputs.JoystickDirection = Vector3.ClampMagnitude(Offset, BG.preferredWidth) / BG.preferredWidth;
+            SO_GameManager.PlayerInputs.JoystickDirection = Vector3.ClampMagnitude(Offset, BG.rectTransform.rect.width) / BG.rectTransform.rect.width;
             SO_GameManager.PlayerInputs.JoystickDirection.z = 0;
-            Handle.transform.position = new Vector3(SO_GameManager.PlayerInputs.FingerInitialPos.x + Vector3.ClampMagnitude(Offset, BG.preferredWidth / 2).x, SO_GameManager.PlayerInputs.FingerInitialPos.y + Vector3.ClampMagnitude(Offset, BG.preferredHeight / 2).y, 0);
+            Handle.transform.position = new Vector3(SO_GameManager.PlayerInputs.FingerInitialPos.x + Vector3.ClampMagnitude(Offset, BG.rectTransform.rect.width / 2).x, SO_GameManager.PlayerInputs.FingerInitialPos.y + Vector3.ClampMagnitude(Offset, BG.rectTransform.rect.height / 2).y, 0);
         }
     }
 }

@@ -16,6 +16,7 @@ public class CharacterController : MonoBehaviour
         {
             BreakForce();
         }
+
     }
     private void FixedUpdate()
     {
@@ -27,7 +28,7 @@ public class CharacterController : MonoBehaviour
 
     public void MovePlayer(Vector3 direction)
     {
-        Rb.MovePosition( this.transform.position + (direction * Time.deltaTime * SO_GameManager.CharacterParameters.Speed));
+        Rb.AddForce(direction * Time.deltaTime * SO_GameManager.CharacterParameters.Speed,ForceMode.VelocityChange);
     }
 
     public void BreakForce()
@@ -35,10 +36,4 @@ public class CharacterController : MonoBehaviour
         Rb.MovePosition(this.transform.position);
         SO_GameManager.PlayerInputs.BreakForce = false;
     }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        Debug.Log("Colliding with wall");
-    }
-
 }

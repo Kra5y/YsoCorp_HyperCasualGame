@@ -9,7 +9,7 @@ public class Destroy : MonoBehaviour
     {
         if (!SO_GameManager.Instance.IsGameOver)
         {
-            Destroy(collision.gameObject);
+            Destroy(collision.collider.gameObject);
             SO_GameManager.CharacterParameters.Score++;
         }
     }
