@@ -5,9 +5,8 @@ using UnityEngine;
 public class SpawnRandom : MonoBehaviour
 {
     [SerializeField] List<Obstacle> Obstacles = new List<Obstacle>();
-    [SerializeField] List<Transform> SpawnPoints = new List<Transform>();
+    [SerializeField] Transform SpawnPoint;
 
-    [SerializeField] float TimeBetweenObstacles;
     float CurrentTimeBetweenObstacles;
 
     private void Start()
@@ -15,10 +14,18 @@ public class SpawnRandom : MonoBehaviour
         StartCoroutine(ObstacleSpawn());
     }
 
+    private void Update()
+    {
+        if (SO_GameManager.Instance.IsGameOver)
+        {
+            StopAllCoroutines();
+        }
+    }
+
     IEnumerator ObstacleSpawn()
     {
-        yield return new WaitForSeconds(TimeBetweenObstacles);
-        Instantiate(Obstacles[Random.Range(0,Obstacles.Count)], SpawnPoints[Random.Range(0, SpawnPoints.Count)].position,Quaternion.identity);
+        yield return new WaitForSeconds(SO_GameManager.ObstaclesManager.TimeBetweenObstacles);
+        Instantiate(Obstacles[Random.Range(0,Obstacles.Count)],SpawnPoint.position,Quaternion.identity);
         StartCoroutine(ObstacleSpawn());
     }
 

@@ -6,6 +6,8 @@ using UnityEngine;
 public class SOCharacterParameters : ScriptableObject
 {
     [SerializeField] private float speed;
+    public int Score;
+    public int BestScore;
 
     public float Speed { get { return speed; } }
 }

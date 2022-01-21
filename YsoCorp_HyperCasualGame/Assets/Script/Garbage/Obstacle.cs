@@ -20,7 +20,7 @@ public class Obstacle : MonoBehaviour
     {
         if(collider.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(0);
+            SO_GameManager.Instance.GameOver();
         }
     }
 
