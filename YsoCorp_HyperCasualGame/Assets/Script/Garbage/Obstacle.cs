@@ -34,7 +34,7 @@ public class Obstacle : MonoBehaviour
 
     IEnumerator LifeSpan()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(10f);
         Destroy(this.gameObject);
     }
 }

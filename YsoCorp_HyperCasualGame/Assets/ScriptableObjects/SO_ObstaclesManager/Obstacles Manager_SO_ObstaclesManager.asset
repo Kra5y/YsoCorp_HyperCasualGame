@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c52835279e63c742afa02dcd56edbca, type: 3}
   m_Name: Obstacles Manager_SO_ObstaclesManager
   m_EditorClassIdentifier: 
-  timeBetweenObstacles: 5
+  timeBetweenObstacles: 4
   obstaclesSpeed: 40
   Tier: 0

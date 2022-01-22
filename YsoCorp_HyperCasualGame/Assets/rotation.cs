@@ -14,7 +14,7 @@ public class rotation : MonoBehaviour
         {
             return;
         }
-        if(Delay == 0)
+        if (Delay == 0)
         {
             CanRotate = true;
         }
@@ -28,7 +28,7 @@ public class rotation : MonoBehaviour
     {
         if (CanRotate)
         {
-            transform.Rotate(0, 0, Angle * Time.deltaTime * SO_GameManager.ObstaclesManager.Tier);
+            transform.Rotate(0, 0, Angle * Time.deltaTime * (.5f * SO_GameManager.ObstaclesManager.Tier + .5f));
         }
     }
 

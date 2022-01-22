@@ -8,6 +8,7 @@ public class SpawnRandom : MonoBehaviour
     [SerializeField] Transform SpawnPoint;
 
     float CurrentTimeBetweenObstacles;
+    private int PreviousIndex;
 
     private void Start()
     {
@@ -24,8 +25,17 @@ public class SpawnRandom : MonoBehaviour
 
     IEnumerator ObstacleSpawn()
     {
+        int rnd = Random.Range(0, Obstacles.Count);
         yield return new WaitForSeconds(SO_GameManager.ObstaclesManager.TimeBetweenObstacles);
-        Instantiate(Obstacles[Random.Range(0,Obstacles.Count)],SpawnPoint.position,Quaternion.identity);
+        if(Obstacles.Count > 1)
+        {
+            while (rnd == PreviousIndex)
+            {
+                rnd = Random.Range(0, Obstacles.Count);
+            }
+        }
+        PreviousIndex = rnd;
+        Instantiate(Obstacles[rnd],SpawnPoint.position,Quaternion.identity);
         StartCoroutine(ObstacleSpawn());
     }
 

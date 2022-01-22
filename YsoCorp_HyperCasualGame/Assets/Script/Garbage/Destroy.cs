@@ -5,12 +5,13 @@ using TMPro;
 
 public class Destroy : MonoBehaviour
 {
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!SO_GameManager.Instance.IsGameOver)
+        if (!SO_GameManager.Instance.IsGameOver && other.tag == "Obstacle")
         {
-            Destroy(collision.collider.gameObject);
+            Destroy(other.gameObject);
             SO_GameManager.CharacterParameters.Score++;
         }
     }
+
 }
