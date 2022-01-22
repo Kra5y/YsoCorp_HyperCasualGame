@@ -10,11 +10,15 @@ public class rotation : MonoBehaviour
 
     private void Awake()
     {
+        if (SO_GameManager.ObstaclesManager.Tier == 0)
+        {
+            return;
+        }
         if(Delay == 0)
         {
             CanRotate = true;
         }
-        else
+        else if (Delay != 0)
         {
             StartCoroutine(DelayRotation());
         }
@@ -24,7 +28,7 @@ public class rotation : MonoBehaviour
     {
         if (CanRotate)
         {
-            transform.Rotate(0, 0, Angle * Time.deltaTime);
+            transform.Rotate(0, 0, Angle * Time.deltaTime * SO_GameManager.ObstaclesManager.Tier);
         }
     }
 

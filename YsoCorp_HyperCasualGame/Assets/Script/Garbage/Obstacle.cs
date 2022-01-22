@@ -10,10 +10,18 @@ public class Obstacle : MonoBehaviour
     private void Start()
     {
         Rb = GetComponent<Rigidbody>();
+        StartCoroutine(LifeSpan());
     }
     void FixedUpdate()
     {
-        Rb.MovePosition(this.transform.position +(-transform.forward * SO_GameManager.ObstaclesManager.ObstaclesSpeed * Time.deltaTime));   
+        if(SO_GameManager.ObstaclesManager.Tier == 0)
+        {
+            Rb.MovePosition(this.transform.position + (-transform.forward * SO_GameManager.ObstaclesManager.ObstaclesSpeed * Time.deltaTime));
+        }
+        else
+        {
+            Rb.MovePosition(this.transform.position + (-transform.forward * SO_GameManager.ObstaclesManager.ObstaclesSpeed * Time.deltaTime * (0.15f * SO_GameManager.ObstaclesManager.Tier +.85f)));
+        }
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -24,4 +32,9 @@ public class Obstacle : MonoBehaviour
         }
     }
 
+    IEnumerator LifeSpan()
+    {
+        yield return new WaitForSeconds(5f);
+        Destroy(this.gameObject);
+    }
 }

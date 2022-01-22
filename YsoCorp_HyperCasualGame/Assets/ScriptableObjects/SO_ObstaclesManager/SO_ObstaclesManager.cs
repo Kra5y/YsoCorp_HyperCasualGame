@@ -8,6 +8,8 @@ public class SO_ObstaclesManager : ScriptableObject
     [SerializeField] private float timeBetweenObstacles;
     [SerializeField] private float obstaclesSpeed;
 
+    public float Tier;
+
     #region Getters
 
     public float TimeBetweenObstacles { get { return timeBetweenObstacles; } }
@@ -15,4 +17,5 @@ public class SO_ObstaclesManager : ScriptableObject
 
 
     #endregion
+
 }
