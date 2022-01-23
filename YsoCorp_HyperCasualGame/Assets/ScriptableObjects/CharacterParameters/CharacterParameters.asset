@@ -15,5 +15,3 @@ MonoBehaviour:
   speed: 1200
   Score: 0
   BestScore: 0
-  powerUpSpawnRate: 100
-  HasPowerUp: 0
